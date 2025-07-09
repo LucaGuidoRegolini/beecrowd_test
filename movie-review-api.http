@@ -1,0 +1,31 @@
+### Criar uma nova review para um filme
+POST http://localhost:3000/movies/create
+Content-Type: application/json
+
+{
+  "imdb_id": "tt1375666",
+  "user_opinion": "Ótimo filme! Plot complexo e atuações incríveis.",
+  "user_rating": 9
+}
+
+### Buscar filmes por título
+GET http://localhost:3000/movies/search-movie?title=Inception
+
+### Buscar filmes por ano
+GET http://localhost:3000/movies/search-movie?year=2010
+
+### Buscar filmes por título e ano
+GET http://localhost:3000/movies/search?title=Inception&year=2010
+
+### Exemplo com outro filme
+POST http://localhost:3000/movies/create
+Content-Type: application/json
+
+{
+  "imdb_id": "tt0816692",
+  "user_opinion": "Visualmente impressionante e conceito científico interessante.",
+  "user_rating": 8
+}
+
+### Buscar o filme Interstellar
+GET http://localhost:3000/movies/search?title=Interstellar

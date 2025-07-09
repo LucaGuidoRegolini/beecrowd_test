@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReviewService } from './review.service';
-import { IReviewRepository } from '../../domain/repositories/review.repository';
-import { Review } from '../../domain/entities/review.entity';
+import { ReviewService } from '@src/core/application/services/review.service';
+import { IReviewRepository } from '@src/core/domain/repositories/review.repository';
+import { Review } from '@src/core/domain/entities/review.entity';
 
 describe('ReviewService', () => {
   let service: ReviewService;

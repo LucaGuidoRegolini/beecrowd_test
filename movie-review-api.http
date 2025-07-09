@@ -9,10 +9,10 @@ Content-Type: application/json
 }
 
 ### Buscar filmes por título
-GET http://localhost:3000/movies/search-movie?title=Inception
+GET http://localhost:3000/movies/search?title=Inception
 
 ### Buscar filmes por ano
-GET http://localhost:3000/movies/search-movie?year=2010
+GET http://localhost:3000/movies/search?year=2010
 
 ### Buscar filmes por título e ano
 GET http://localhost:3000/movies/search?title=Inception&year=2010
@@ -29,3 +29,19 @@ Content-Type: application/json
 
 ### Buscar o filme Interstellar
 GET http://localhost:3000/movies/search?title=Interstellar
+
+
+# Usando API gatway
+
+### Exemplo com outro filme
+POST http://localhost:90/create-movie
+Content-Type: application/json
+
+{
+  "imdb_id": "tt0816692",
+  "user_opinion": "Visualmente impressionante e conceito científico interessante.",
+  "user_rating": 8
+}
+
+### Buscar o filme Interstellar
+GET http://localhost:90/search-movie?title=Interstellar

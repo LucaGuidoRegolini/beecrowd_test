@@ -4,11 +4,12 @@ import axios from 'axios';
 import {
   IOmdbService,
   OmdbMovieFetcher,
-  OmdbMovie,
 } from '../../domain/services/omdb.service';
+import { OmdbMapper } from './omdb.mapper';
+import { Movie } from '../../domain/entities/movie.entity';
 
 @Injectable()
-export class OmdbService extends OmdbMovieFetcher implements IOmdbService {
+export class HttpOmdbService extends OmdbMovieFetcher implements IOmdbService {
   private readonly apiKey: string;
   private readonly baseUrl = 'http://www.omdbapi.com/';
 
@@ -30,11 +31,11 @@ export class OmdbService extends OmdbMovieFetcher implements IOmdbService {
     return response.data;
   }
 
-  protected async parseResponse(response: any): Promise<OmdbMovie> {
+  protected async parseResponse(response: any): Promise<Movie> {
     if (response.Response === 'False') {
       throw new Error(response.Error || 'Failed to fetch movie from OMDb');
     }
-    return response;
+    return OmdbMapper.toDomain(response);
   }
 
   protected handleError(error: any): void {

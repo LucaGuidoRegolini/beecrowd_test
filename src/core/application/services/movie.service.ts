@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { IMovieRepository } from '../../domain/repositories/movie.repository';
 import { Movie } from '../../domain/entities/movie.entity';
-import { OmdbService } from '../../infrastructure/services/omdb.service';
+import { HttpOmdbService } from '../../infrastructure/services/omdb.service';
 import { ReviewService } from './review.service';
 import { Review } from '../../domain/entities/review.entity';
 
@@ -10,7 +10,7 @@ export class MovieService {
   constructor(
     @Inject('IMovieRepository')
     private readonly movieRepository: IMovieRepository,
-    private readonly omdbService: OmdbService,
+    private readonly omdbService: HttpOmdbService,
     private readonly reviewService: ReviewService,
   ) {}
 
@@ -22,18 +22,8 @@ export class MovieService {
     let movie = await this.movieRepository.findByImdbId(imdbId);
 
     if (!movie) {
-      const omdbMovie = await this.omdbService.getMovieByImdbId(imdbId);
       movie = await this.movieRepository.save(
-        Movie.create({
-          imdbId: omdbMovie.imdbID,
-          title: omdbMovie.Title,
-          year: parseInt(omdbMovie.Year),
-          genre: omdbMovie.Genre,
-          director: omdbMovie.Director,
-          actors: omdbMovie.Actors.split(', '),
-          imdbRating: parseFloat(omdbMovie.imdbRating),
-          plot: omdbMovie.Plot,
-        }),
+        await this.omdbService.getMovieByImdbId(imdbId),
       );
     }
 
